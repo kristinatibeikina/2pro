@@ -27,9 +27,8 @@ new Vue({
                     dateStart: new Date().toLocaleString(),
                     title: this.cardTitle,
                     data: this.dateEnd,
-                    items: [
-                        { id: 1, completed: false },
-                    ],
+                    completed: false ,
+
                     completedItems: 0,
                 };
                 this.column1.push(newCard);
@@ -51,29 +50,37 @@ new Vue({
         },
         columnTu(){
             this.column1.forEach(card => {
-                this.column2.push(card);
-                this.column1 = this.column1.filter(c => c.id !== card.id);
+                if(card.completed === true){
+                    this.column2.push(card);
+                    this.column1 = this.column1.filter(c => c.id !== card.id);
+                }
             });
             this.saveCards();
         },
         columnThree(){
             this.column2.forEach(card=>{
-                this.column3.push(card);
-                this.column2 = this.column2.filter(c => c.id !== card.id);
+                if(card.completed === true) {
+                    this.column3.push(card);
+                    this.column2 = this.column2.filter(c => c.id !== card.id);
+                }
             });
             this.saveCards();
         },
         columnFour(){
             this.column3.forEach(card=>{
-                this.column4.push(card);
-                this.column3 = this.column3.filter(c => c.id !== card.id);
+                if(card.completed === true) {
+                    this.column4.push(card);
+                    this.column3 = this.column3.filter(c => c.id !== card.id);
+                }
             });
             this.saveCards();
         },
         back(){
             this.column3.forEach(card=>{
-                this.column2.push(card);
-                this.column3=this.column3.filter(c => c.id !== card.id);
+                if(card.completed === true){
+                    this.column2.push(card);
+                    this.column3=this.column3.filter(c => c.id !== card.id);
+                }
             });
             this.saveCards();
         },
@@ -131,19 +138,19 @@ new Vue({
 
 
     },
-   /* watch: {
-        'column1': {
-            handler() {
-                this.updateCardStatus();
-            },
-            deep: true
-        },
-        'column2': {
-            handler() {
-                this.updateCardStatus();
-            },
-            deep: true
-        }
-    }*/
+    /* watch: {
+         'column1': {
+             handler() {
+                 this.updateCardStatus();
+             },
+             deep: true
+         },
+         'column2': {
+             handler() {
+                 this.updateCardStatus();
+             },
+             deep: true
+         }
+     }*/
 
 })

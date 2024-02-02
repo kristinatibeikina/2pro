@@ -6,7 +6,9 @@ body{
     justify-content: space-between;
     margin-top: 30px;
 }
-.li{
-    text-decoration: none;
+li{
     margin-left: -40px;
+}
+ul{
+    list-style-type: none;
 }
