@@ -21,10 +21,7 @@ new Vue({
     methods: {
 
         createCard() {
-            if(this.column1.length===3){
-                this.errors.push("Не более 3 заметок в 1 колонке")
-            }
-            if (this.cardTitle !== ''  && this.column1.length<3) {
+            if (this.cardTitle !== '') {
                 const newCard = {
                     id: Date.now(),
                     dateStart: new Date().toLocaleString(),
@@ -52,6 +49,34 @@ new Vue({
 
             localStorage.setItem('cards', JSON.stringify(cards));
         },
+        columnTu(){
+            this.column1.forEach(card => {
+                this.column2.push(card);
+                this.column1 = this.column1.filter(c => c.id !== card.id);
+            });
+            this.saveCards();
+        },
+        columnThree(){
+            this.column2.forEach(card=>{
+                this.column3.push(card);
+                this.column2 = this.column2.filter(c => c.id !== card.id);
+            });
+            this.saveCards();
+        },
+        columnFour(){
+            this.column3.forEach(card=>{
+                this.column4.push(card);
+                this.column3 = this.column3.filter(c => c.id !== card.id);
+            });
+            this.saveCards();
+        },
+        back(){
+            this.column3.forEach(card=>{
+                this.column2.push(card);
+                this.column3=this.column3.filter(c => c.id !== card.id);
+            });
+            this.saveCards();
+        },
         updateCardStatus() {
             this.column1.forEach(card => {
                 const completedItems = card.items.filter(item => item.completed).length;
@@ -65,10 +90,9 @@ new Vue({
                 }
 
                 if (completionPercentage >= 50) {
-                    if(this.column2.length < 5) {
-                        this.column2.push(card);
-                        this.column1 = this.column1.filter(c => c.id !== card.id);
-                    }
+                    this.column2.push(card);
+                    this.column1 = this.column1.filter(c => c.id !== card.id);
+
                 }
 
             });
@@ -103,10 +127,11 @@ new Vue({
         removeMask(index, type){
             this.column1.splice(index,1)
 
-        }
+        },
+
 
     },
-    watch: {
+   /* watch: {
         'column1': {
             handler() {
                 this.updateCardStatus();
@@ -119,6 +144,6 @@ new Vue({
             },
             deep: true
         }
-    }
+    }*/
 
 })

@@ -17,7 +17,7 @@
 <div id="app">
     <form @submit.prevent="createCard">
         <input type="text" v-model="cardTitle" placeholder="Заголовок" required class="input">
-        <input type="text" v-model="dateEnd" placeholder="Дата завершения" required class="input">
+        <input type="date" v-model="dateEnd" placeholder="Дата завершения" required class="input">
         <button type="submit" class="btn">Добавить</button>
 
     </form>
@@ -37,10 +37,10 @@
                 <div>Закончить к {{card.data}}</div>
                 <ul>
                     <li v-for="item in card.items" :key="item.id">
-                        <input type="checkbox" v-model="item.completed" :disabled="isDisabled">
                         <input type="textarea" v-model="item.cardText" required :disabled="isDisabled" class="input">
                     </li>
                 </ul>
+                <button type="submit" class="btn" v-on:click="columnTu">Переместить</button>
                 <button v-on:click="removeMask(index,'need')" class="btn">Удалить</button>
             </div>
         </div>
@@ -50,10 +50,10 @@
                 <h3>{{ card.title }}</h3>
                 <ul>
                     <li v-for="item in card.items" :key="item.id">
-                        <input type="checkbox" v-model="item.completed">
                         <input type="text" v-model="item.cardText" required>
                     </li>
                 </ul>
+                <button type="submit" class="btn" v-on:click="columnThree">Переместить</button>
             </div>
         </div>
         <div class="column" id="column3">
@@ -62,11 +62,11 @@
                 <h3>{{ card.title }}</h3>
                 <ul>
                     <li v-for="item in card.items" :key="item.id">
-                        <input type="checkbox" v-model="item.completed">
                         <input type="text" v-model="item.cardText" required>
                     </li>
                 </ul>
-                <div class="time">Завершено: {{ card.completedDate }}</div>
+                <button type="submit" class="btn" v-on:click="columnFour">Переместить</button>
+                <button type="submit" class="btn" v-on:click="back">Вернуть обратно</button>
             </div>
         </div>
         <div class="column" id="column4">
@@ -75,7 +75,6 @@
                 <h3>{{ card.title }}</h3>
                 <ul>
                     <li v-for="item in card.items" :key="item.id">
-                        <input type="checkbox" v-model="item.completed">
                         <input type="text" v-model="item.cardText" required>
                     </li>
                 </ul>
