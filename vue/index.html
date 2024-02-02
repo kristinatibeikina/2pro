@@ -33,6 +33,7 @@
             <div v-for="card in column1" :key="card.id" class="card">
                 <h3>{{ card.title }}</h3>
 
+                <div class="time">Создано : {{ card.dateStart }}</div>
                 <div>Закончить к {{card.data}}</div>
                 <ul>
                     <li v-for="item in card.items" :key="item.id">
