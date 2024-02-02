@@ -12,46 +12,68 @@
 </head>
 <body>
 <header>
-    <h1>Доска заметок</h1>
+    <h1>Kanban доска</h1>
 </header>
 <div id="app">
     <form @submit.prevent="createCard">
-        <input type="text" v-model="cardTitle" placeholder="Enter the title of the card" required>
-        <button type="submit">Add</button>
+        <input type="text" v-model="cardTitle" placeholder="Заголовок" required class="input">
+        <button type="submit" class="btn">Добавить</button>
+
     </form>
+    <p v-if="errors.length">
+        <b>Превышен размер задач:</b>
+    <ul>
+        <li v-for="error in errors">{{ error }}</li>
+    </ul>
+    </p>
     <div class="columns">
         <div class="column" id="column1">
-            <h2>Новые</h2>
+            <h2>Запланированные задачи</h2>
             <div v-for="card in column1" :key="card.id" class="card">
                 <h3>{{ card.title }}</h3>
+
                 <ul>
                     <li v-for="item in card.items" :key="item.id">
-                        <input type="checkbox" v-model="item.completed">
-
+                        <input type="checkbox" v-model="item.completed" :disabled="isDisabled">
+                        <input type="textarea" v-model="item.cardText" required :disabled="isDisabled" class="input">
                     </li>
                 </ul>
+                <button v-on:click="removeMask(index,'need')" class="btn">Удалить</button>
             </div>
         </div>
         <div class="column" id="column2">
-            <h2>Half completed</h2>
+            <h2>Задачи в работе</h2>
             <div v-for="card in column2" :key="card.id" class="card">
                 <h3>{{ card.title }}</h3>
                 <ul>
                     <li v-for="item in card.items" :key="item.id">
                         <input type="checkbox" v-model="item.completed">
-
+                        <input type="text" v-model="item.cardText" required>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="column" id="column3">
-            <h2>Done</h2>
-            <div v-for="card in column3" :key="card.id" class="card">
-                <h3>{{ card.title }} <span v-if="card.completed">(Завершено: {{ card.completedDate }})</span></h3>
+            <h2>Тестирование</h2>
+            <div v-for="(card, index) in column3" :key="card.id" class="card">
+                <h3>{{ card.title }}</h3>
                 <ul>
                     <li v-for="item in card.items" :key="item.id">
                         <input type="checkbox" v-model="item.completed">
-
+                        <input type="text" v-model="item.cardText" required>
+                    </li>
+                </ul>
+                <div class="time">Завершено: {{ card.completedDate }}</div>
+            </div>
+        </div>
+        <div class="column" id="column4">
+            <h2>Выполненные задачи</h2>
+            <div v-for="(card, index) in column4" :key="card.id" class="card">
+                <h3>{{ card.title }}</h3>
+                <ul>
+                    <li v-for="item in card.items" :key="item.id">
+                        <input type="checkbox" v-model="item.completed">
+                        <input type="text" v-model="item.cardText" required>
                     </li>
                 </ul>
             </div>
