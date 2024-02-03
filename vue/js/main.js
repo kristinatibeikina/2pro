@@ -2,7 +2,7 @@ new Vue({
     el: '#app',
     data: {
         cardTitle: '',
-        cardText: [],
+        cardText: '',
         column1: [],
         column2: [],
         column3: [],
@@ -12,7 +12,10 @@ new Vue({
         isDisabled:false,
         dateEnd: '',
         dateStart: '',
-
+        editedCardContent: '',
+        editing: false,
+        complaint : false,
+        c : false,
     },
     mounted() {
         this.loadCards();
@@ -28,8 +31,10 @@ new Vue({
                     title: this.cardTitle,
                     data: this.dateEnd,
                     completed: false ,
-
+                    redact: '',
                     completedItems: 0,
+                    text: this.cardText,
+
                 };
                 this.column1.push(newCard);
                 this.cardTitle = '';
@@ -43,48 +48,42 @@ new Vue({
             const cards = {
                 column1: this.column1,
                 column2: this.column2,
-                column3: this.column3
+                column3: this.column3,
+                editing : false,
+                cardContent : this.editedCardContent
             };
 
-            localStorage.setItem('cards', JSON.stringify(cards));
+
         },
-        columnTu(){
-            this.column1.forEach(card => {
-                if(card.completed === true){
-                    this.column2.push(card);
-                    this.column1 = this.column1.filter(c => c.id !== card.id);
-                }
-            });
+        columnTu(card){
+            this.column1.splice(this.column1.indexOf(card),1)
+            this.column2.push(card);
+        },
+        columnThree(card){
+            this.column2.splice(this.column2.indexOf(card),1)
+            this.column3.push(card);
+        },
+        columnFour(card){
+            this.column3.splice(this.column3.indexOf(card),1)
+            this.column4.push(card);
+        },
+        back(card){
+            this.complaint = true
+            if (card.redact!==''){
+                this.column3.splice(this.column3.indexOf(card),1)
+                this.column2.push(card);
+            }
+
+
+        },
+        redactCard(text){
+            this.c=true
+            this.complaint = false
+            this.redact=text
             this.saveCards();
         },
-        columnThree(){
-            this.column2.forEach(card=>{
-                if(card.completed === true) {
-                    this.column3.push(card);
-                    this.column2 = this.column2.filter(c => c.id !== card.id);
-                }
-            });
-            this.saveCards();
-        },
-        columnFour(){
-            this.column3.forEach(card=>{
-                if(card.completed === true) {
-                    this.column4.push(card);
-                    this.column3 = this.column3.filter(c => c.id !== card.id);
-                }
-            });
-            this.saveCards();
-        },
-        back(){
-            this.column3.forEach(card=>{
-                if(card.completed === true){
-                    this.column2.push(card);
-                    this.column3=this.column3.filter(c => c.id !== card.id);
-                }
-            });
-            this.saveCards();
-        },
-        updateCardStatus() {
+
+       /* updateCardStatus() {
             this.column1.forEach(card => {
                 const completedItems = card.items.filter(item => item.completed).length;
                 const completionPercentage = (completedItems / card.items.length) * 100;
@@ -121,8 +120,8 @@ new Vue({
             });
 
             this.saveCards();
-        },
-        loadCards() {
+        },*/
+        /*loadCards() {
             const savedCards = JSON.parse(localStorage.getItem('cards'));
 
             if (savedCards) {
@@ -130,27 +129,16 @@ new Vue({
                 this.column2 = savedCards.column2 || [];
                 this.column3 = savedCards.column3 || [];
             }
-        },
+        },*/
         removeMask(index, type){
             this.column1.splice(index,1)
 
         },
+        editCard() {
+            this.editing = true;
 
+        },
 
     },
-    /* watch: {
-         'column1': {
-             handler() {
-                 this.updateCardStatus();
-             },
-             deep: true
-         },
-         'column2': {
-             handler() {
-                 this.updateCardStatus();
-             },
-             deep: true
-         }
-     }*/
 
 })

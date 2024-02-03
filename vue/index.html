@@ -16,8 +16,9 @@
 </header>
 <div id="app">
     <form @submit.prevent="createCard">
-        <input type="text" v-model="cardTitle" placeholder="Заголовок" required class="input">
-        <input type="date" v-model="dateEnd" placeholder="Дата завершения" required class="input">
+        <input type="text" v-model="cardTitle" placeholder="Заголовок" required class="input"><br>
+        <input type="text" v-model="cardText" placeholder="Задача" required  class="input"><br>
+        <input type="date" v-model="dateEnd"  required class="input"><br><br>
         <button type="submit" class="btn">Добавить</button>
 
     </form>
@@ -34,12 +35,18 @@
                 <h3>{{ card.title }}</h3>
 
                 <div class="time">Создано : {{ card.dateStart }}</div>
-                <div>Закончить к {{card.data}}</div>
+                <div>Закончить к {{card.data}}</div><br>
 
-                <input type="text" v-model="card.cardText" required :disabled="isDisabled" class="input"><br>
+                   <!-- <div v-if="!editing">
+                        <div>Описание задачи: {{card.text}}</div>
+                        <button @click="editCard">Редактировать</button>
+                    <div>
+                    <div v-if="editing">
+                        <textarea v-model="editedCardContent"></textarea>
+                    </div>-->
 
-                <input type="checkbox" v-model="card.completed" >
-                <button type="submit" class="btn" v-on:click="columnTu">Переместить</button>
+                <div>Задача: {{card.text}}</div>
+                <button type="submit" class="btn" v-on:click="columnTu(card)">Переместить</button>
                 <button v-on:click="removeMask(index,'need')" class="btn">Удалить</button>
             </div>
         </div>
@@ -49,12 +56,17 @@
                 <h3>{{ card.title }}</h3>
 
                 <div class="time">Создано : {{ card.dateStart }}</div>
-                <div>Закончить к {{card.data}}</div>
+                <div>Закончить к {{card.data}}</div><br>
 
-                <input type="text" v-model="card.cardText" required :disabled="isDisabled" class="input"><br>
+                <div>Задача: {{card.text}}</div>
 
-                <input type="checkbox" v-model="card.completed" >
-                <button type="submit" class="btn" v-on:click="columnThree">Переместить</button>
+                <button type="submit" class="btn" v-on:click="columnThree(card)">Переместить</button>
+
+
+
+                <div v-if="c">
+                    <div>Причина возврата: {{card.redact}}</div>
+                </div>
             </div>
         </div>
         <div class="column" id="column3">
@@ -63,24 +75,28 @@
                 <h3>{{ card.title }}</h3>
 
                 <div class="time">Создано : {{ card.dateStart }}</div>
-                <div>Закончить к {{card.data}}</div>
+                <div>Закончить к {{card.data}}</div><br>
 
-                <input type="text" v-model="card.cardText" required :disabled="isDisabled" class="input"><br>
+                <div>Задача: {{card.text}}</div>
+                <button type="submit" class="btn" v-on:click="columnFour(card)">Переместить</button>
+                <button type="submit" class="btn" v-on:click="back(card)">Вернуть обратно</button>
 
-                <input type="checkbox" v-model="card.completed" >
-                <button type="submit" class="btn" v-on:click="columnFour">Переместить</button>
-                <button type="submit" class="btn" v-on:click="back">Вернуть обратно</button>
+
+                <div v-if="complaint">
+                    <textarea v-model="card.redact" placeholder="Причина возарата"></textarea>
+                    <button type="submit" class="btn" v-on:click="redactCard(card.redact)" >Сохранить</button>
+                </div>
+
+
             </div>
         </div>
         <div class="column" id="column4">
             <h2>Выполненные задачи</h2>
             <div v-for="(card, index) in column4" :key="card.id" class="card">
                 <h3>{{ card.title }}</h3>
-                <ul>
-                    <li v-for="item in card.items" :key="item.id">
-                        <input type="text" v-model="card.cardText" required>
-                    </li>
-                </ul>
+                <div class="time">Создано : {{ card.dateStart }}</div>
+                <div>Закончить к {{card.data}}</div>
+                <div>Задача: {{card.text}}</div>
             </div>
         </div>
     </div>
