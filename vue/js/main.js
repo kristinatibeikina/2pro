@@ -96,6 +96,7 @@ new Vue({
         redactCard(card,text){
             card.editing = false
             card.text=text
+            card.redactData =new Date().toLocaleString()
             this.saveCards()
         }
 

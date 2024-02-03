@@ -30,6 +30,7 @@
 
                 <div class="time">Создано : {{ card.dateStart }}</div>
                 <div>Закончить к {{card.data}}</div><br>
+                <div v-if="card.redactData">Дата редактирования: {{card.redactData}}</div>
 
                     <div v-if="card.editing">
                         <textarea v-model="editedCardContent"></textarea><br>
