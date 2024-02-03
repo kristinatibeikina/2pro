@@ -50,9 +50,15 @@
 
                 <div class="time">Создано : {{ card.dateStart }}</div>
                 <div>Закончить к {{card.data}}</div><br>
+                <div v-if="card.redactData">Дата редактирования: {{card.redactData}}</div>
+
+                <div v-if="card.editing">
+                    <textarea v-model="editedCardContent"></textarea><br>
+                    <button v-on:click="redactCard(card,editedCardContent)">Сохранить</button>
+                </div>
 
                 <div>Задача: {{card.text}}</div>
-
+                <button v-on:click="editCard(card)">Редактировать</button>
                 <button type="submit" class="btn" v-on:click="columnThree(card)">Переместить</button>
 
 
@@ -69,15 +75,22 @@
 
                 <div class="time">Создано : {{ card.dateStart }}</div>
                 <div>Закончить к {{card.data}}</div><br>
+                <div v-if="card.redactData">Дата редактирования: {{card.redactData}}</div>
+
+                <div v-if="card.editing">
+                    <textarea v-model="editedCardContent"></textarea><br>
+                    <button v-on:click="redactCard(card,editedCardContent)">Сохранить</button>
+                </div>
 
                 <div>Задача: {{card.text}}</div>
+                <button v-on:click="editCard(card)">Редактировать</button>
                 <button type="submit" class="btn" v-on:click="columnFour(card)">Переместить</button>
                 <button type="submit" class="btn" v-on:click="back(card)">Вернуть обратно</button>
 
 
                 <div v-if="card.completed">
                     <textarea v-model="card.redact" placeholder="Причина возарата"></textarea>
-                    <button type="submit" class="btn" v-on:click="redactCard(card.redact, card)" >Сохранить</button>
+                    <button type="submit" class="btn" v-on:click="rCard(card.redact, card)" >Сохранить</button>
                 </div>
 
 

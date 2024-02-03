@@ -79,7 +79,7 @@ new Vue({
 
 
         },
-        redactCard(text, card){
+        rCard(text, card){
             this.c=true
             card.completed = false
             this.redact=text
