@@ -73,7 +73,7 @@ new Vue({
             this.column3.push(card);
         },
         columnFour(card){
-            if(this.dateEndCard!==0){
+            if(card.end!=0){
                 this.column3.splice(this.column3.indexOf(card),1)
                 this.column4.push(card);
             }

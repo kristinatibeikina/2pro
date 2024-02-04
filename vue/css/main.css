@@ -12,3 +12,37 @@ li{
 ul{
     list-style-type: none;
 }
+.column{
+    background-color: #e0c09a;
+    width: 450px;
+    height: 1500px;
+
+}
+form{
+    border-bottom: solid 2px;
+    border-bottom-color: #413220;
+    margin-bottom: 5px;
+    margin-left: 20px;
+    padding-bottom: 15px;
+}
+.btn{
+    color: white;
+    background-color: #413220;
+    width: 110px;
+    height: 33px;
+    margin-bottom: 0px;
+}
+h2{
+    text-align: center;
+}
+.input{
+    height: 27px;
+    width: 220px;
+    margin-bottom: 9px;
+}
+.card{
+    margin: 10px 0px 10px 20px;
+    background-color: #b77627;
+    padding: 0px 0px 10px 10px;
+    width: 400px;
+}

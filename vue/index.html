@@ -41,7 +41,7 @@
                     </div>
 
                 <div>Задача: {{card.text}}</div>
-                <button v-on:click="editCard(card)">Редактировать</button>
+                <button v-on:click="editCard(card)" class="btn">Редактировать</button>
                 <button type="submit" class="btn" v-on:click="columnTu(card)">Переместить</button>
                 <button v-on:click="removeMask(index,'need')" class="btn">Удалить</button>
             </div>
@@ -56,12 +56,15 @@
                 <div v-if="card.redactData">Дата редактирования: {{card.redactData}}</div>
 
                 <div v-if="card.editing">
+                    <p>Изменить дату дедлайна:</p>
+                    <input type="date" v-model="dateEnd"  required class="input"><br><br>
+                    <p>Изменить описание задачи: </p>
                     <textarea v-model="editedCardContent"></textarea><br>
-                    <button v-on:click="redactCard(card,editedCardContent)">Сохранить</button>
+                    <button v-on:click="redactCard(card,editedCardContent, dateEnd)">Сохранить</button>
                 </div>
 
                 <div>Задача: {{card.text}}</div>
-                <button v-on:click="editCard(card)">Редактировать</button>
+                <button v-on:click="editCard(card)" class="btn">Редактировать</button>
                 <button type="submit" class="btn" v-on:click="columnThree(card)">Переместить</button>
 
 
@@ -81,20 +84,24 @@
                 <div v-if="card.redactData">Дата редактирования: {{card.redactData}}</div>
 
                 <div v-if="card.editing">
+                    <p>Изменить дату дедлайна:</p>
+                    <input type="date" v-model="dateEnd"  required class="input"><br><br>
+                    <p>Изменить описание задачи: </p>
                     <textarea v-model="editedCardContent"></textarea><br>
-                    <button v-on:click="redactCard(card,editedCardContent)">Сохранить</button>
+                    <button v-on:click="redactCard(card,editedCardContent, dateEnd)">Сохранить</button>
                 </div>
 
                 <div>Задача: {{card.text}}</div>
-                <button v-on:click="editCard(card)">Редактировать</button>
+                <button v-on:click="editCard(card)" class="btn">Редактировать</button>
                 <button type="submit" class="btn" v-on:click="columnFour(card)">Переместить</button>
-                <button type="submit" class="btn" v-on:click="back(card)">Вернуть обратно</button>
+                <button type="submit" class="btn" v-on:click="back(card)">Вернуть</button>
                 <div v-if="card.editing">
                     <textarea v-model="editedCardContent"></textarea><br>
                     <button v-on:click="redactCard(card,editedCardContent)">Сохранить</button>
                 </div>
 
                 <div v-if="appearance">
+                    <p>Дата сдачи задачи: </p>
                     <input type="date" v-model="dateEndCard"  required class="input"><br><br>
                     <button type="submit" class="btn" v-on:click="methodEndCard(dateEndCard, card)" >Сохранить</button>
                 </div>
@@ -108,8 +115,8 @@
                 <h3>{{ card.title }}</h3>
                 <div class="time">Создано : {{ card.dateStart }}</div>
                 <div>Закончена: {{card.end}}</div>
-                <div>Закончить к {{card.data}}</div>
-                <div>Задача: {{card.text}}</div>
+                <div>Закончить к {{card.data}}</div><br>
+                <div>Задача: {{card.text}}</div><br>
 
                 <div v-if="card.isOverdue">Карточка просрочена</div>
                 <div v-else-if="card.isOnTime">Карточка выполнена в срок</div>
