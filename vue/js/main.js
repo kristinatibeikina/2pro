@@ -73,7 +73,7 @@ new Vue({
             this.column3.push(card);
         },
         columnFour(card){
-            if(this.dateEndCard!=0){
+            if(this.dateEndCard!==0){
                 this.column3.splice(this.column3.indexOf(card),1)
                 this.column4.push(card);
             }
@@ -102,23 +102,18 @@ new Vue({
 
 
         },
-        rCard(text, card){
-            this.c=true
-            card.completed = false
-            this.redact=text
-            this.saveCards();
-        },
+
         removeMask(index, type){
             this.column1.splice(index,1)
-
         },
         editCard(card) {
             card.editing = true;
 
         },
-        redactCard(card,text){
+        redactCard(card,text, date){
             card.editing = false
             card.text=text
+            card.data=date
             card.redactData =new Date().toLocaleString()
             this.saveCards()
         }

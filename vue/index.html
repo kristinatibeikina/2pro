@@ -33,8 +33,11 @@
                 <div v-if="card.redactData">Дата редактирования: {{card.redactData}}</div>
 
                     <div v-if="card.editing">
+                        <p>Изменить дату дедлайна:</p>
+                        <input type="date" v-model="dateEnd"  required class="input"><br><br>
+                        <p>Изменить описание задачи: </p>
                         <textarea v-model="editedCardContent"></textarea><br>
-                        <button v-on:click="redactCard(card,editedCardContent)">Сохранить</button>
+                        <button v-on:click="redactCard(card,editedCardContent, dateEnd)">Сохранить</button>
                     </div>
 
                 <div>Задача: {{card.text}}</div>
