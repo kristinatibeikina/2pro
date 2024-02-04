@@ -16,6 +16,11 @@ new Vue({
         editing: false,
         complaint : false,
         c : false,
+        appearance: false, // флаг просрочки
+        dateEndCard:'',
+        end: '',
+        isOverdue: '',
+        isOnTime: ''
     },
     mounted() {
         this.loadCards();
@@ -35,6 +40,9 @@ new Vue({
                     completedItems: 0,
                     text: this.cardText,
                     editing: false,
+                    end:'',
+                    isOverdue: false,
+                    isOnTime: false
 
                 };
                 this.column1.push(newCard);
@@ -65,8 +73,23 @@ new Vue({
             this.column3.push(card);
         },
         columnFour(card){
-            this.column3.splice(this.column3.indexOf(card),1)
-            this.column4.push(card);
+            if(this.dateEndCard!=0){
+                this.column3.splice(this.column3.indexOf(card),1)
+                this.column4.push(card);
+            }
+
+            this.appearance=true
+
+        },
+        methodEndCard(date,card){
+            card.end=date
+            if(card.data<card.end){
+                card.isOverdue= true
+            }else {
+                card.isOnTime = true
+            }
+            this.appearance=false
+            this.saveCards();
         },
         back(card){
                 card.completed = true
